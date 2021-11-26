@@ -4,9 +4,13 @@ import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import { getArtist } from '../redux/action/index';
+import { initialState } from '../redux/store/index';
 // import { useParams } from "react-router-dom";
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = (state) => ({
+	artist: initialState.albums.artist,
+	songs: initialState.albums.Tracks,
+});
 const mapDispatchToProps = (dispatch) => ({
 	getArtist: (id) => dispatch(getArtist(id)),
 });
@@ -38,8 +42,8 @@ class Artist extends React.Component {
 
 				<Row>
 					<div className="col-12 col-md-10 col-lg-10 mt-5">
-						<h2 className="titleMain">{this.state.artist.name}</h2>
-						<div id="followers">{this.state.artist.nb_fan} followers</div>
+						<h2 className="titleMain">{artist}</h2>
+						<div id="followers">{artist.nb_fan} followers</div>
 						<div
 							className="d-flex justify-content-center"
 							id="button-container"

@@ -13,34 +13,30 @@ export const getArtist = (artistId) => {
           headers,
         }
       );
-
-      if (response.ok) {
-        let artist = await response.json();
-        dispatch({
-          type: "GET_ARTIST",
-          payload: artist,
-        });
-
-        // async () => {
-        //   let tracksResponse = await fetch(
-        //     "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
-        //       artist.name,
-        //     {
-        //       method: "GET",
-        //       headers,
-        //     }
-        //   );
-
-        //   if (tracksResponse.ok) {
-        //     let tracklist = await tracksResponse.json();
-        //     dispatch({
-        //       type: "GET_TRACKS",
-        //       payload: tracklist,
-        //     });
-        //     console.log("SONGS ::::::::::::::", this.state.songs);
-        //   }
-        // };
-      }
+    //   if (response.ok) {
+    //     let artist = await response.json();
+    //     dispatch({
+    //       type: "GET_ARTIST",
+    //       payload: artist,
+    //     });
+    //     async () => {
+    //       let tracksResponse = await fetch(
+    //         "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
+    //           artist.name,
+    //         {
+    //           method: "GET",
+    //           headers,
+    //         }
+    //       );
+    //       if (tracksResponse.ok) {
+    //         let tracklist = await tracksResponse.json();
+    //         dispatch({
+    //           type: "GET_TRACKS",
+    //           payload: tracklist,
+    //         });
+    //       }
+    //     };
+    //   }
     } catch (error) {
       console.log(error);
     }
