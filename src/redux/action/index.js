@@ -1,19 +1,10 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-
-const GetArtist = (artistId) => {
-  const [artist, setArtist] = useState([]);
-  const [song, setSong] = useState([]);
-
-  return async (dispatch, getState) => {
-    let params = useParams();
-    let location = useLocation();
-
+export const getArtist = (artistId) => {
+  return async (dispatch) => {
     let headers = new Headers({
       "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
       "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
     });
-
+    
     try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/deezer/artist/" + artistId,
@@ -25,33 +16,33 @@ const GetArtist = (artistId) => {
 
       if (response.ok) {
         let artist = await response.json();
-        setArtist(
-          {
-            artist,
-          },
+        dispatch({
+          type: "GET_ARTIST",
+          payload: artist,
+        });
 
-          async () => {
-            let tracksResponse = await fetch(
-              "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
-                artist.name,
-              {
-                method: "GET",
-                headers,
-              }
-            );
+        // async () => {
+        //   let tracksResponse = await fetch(
+        //     "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
+        //       artist.name,
+        //     {
+        //       method: "GET",
+        //       headers,
+        //     }
+        //   );
 
-            if (tracksResponse.ok) {
-              let tracklist = await tracksResponse.json();
-              setSong({ tracklist });
-              console.log("SONGS ::::::::::::::", song);
-            }
-          }
-        );
+        //   if (tracksResponse.ok) {
+        //     let tracklist = await tracksResponse.json();
+        //     dispatch({
+        //       type: "GET_TRACKS",
+        //       payload: tracklist,
+        //     });
+        //     console.log("SONGS ::::::::::::::", this.state.songs);
+        //   }
+        // };
       }
     } catch (error) {
       console.log(error);
     }
   };
 };
-
-export default GetArtist;

@@ -3,31 +3,38 @@ import AlbumCard from "./AlbumCard";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import getArtist from "../redux/action/index";
+import {getArtist} from "../redux/action/index";
+// import { useParams } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
   getArtist: (id) => dispatch(getArtist(id)),
 });
 
-const Artist = () => {
-  useEffect(() => {
-    getArtist(id);
-  }, [id]);
+class Artist extends React.Component {
+  state= {
+    artist: {},
+    albums: [],
+  }
 
-  return (
-    <div className="col-12 col-md-9 offset-md-3 mainPage">
-      <Row className="mb-3">
-        <div className="col-9 col-lg-11 mainLinks d-none d-md-flex">
-          <div>TRENDING</div>
-          <div>PODCAST</div>
-          <div>MOODS AND GENRES</div>
-          <div>NEW RELEASES</div>
-          <div>DISCOVER</div>
-        </div>
-      </Row>
+  componentDidMount = async () => {
+    this.props.getArtist (this.props.match.params.id);
+  };
 
-      {/* <Row>
+  render() {
+    return (
+      <div className="col-12 col-md-9 offset-md-3 mainPage">
+        <Row className="mb-3">
+          <div className="col-9 col-lg-11 mainLinks d-none d-md-flex">
+            <div>TRENDING</div>
+            <div>PODCAST</div>
+            <div>MOODS AND GENRES</div>
+            <div>NEW RELEASES</div>
+            <div>DISCOVER</div>
+          </div>
+        </Row>
+
+        <Row>
         <div className="col-12 col-md-10 col-lg-10 mt-5">
           <h2 className="titleMain">{this.state.artist.name}</h2>
           <div id="followers">{this.state.artist.nb_fan} followers</div>
@@ -63,9 +70,10 @@ const Artist = () => {
             </Row>
           </div>
         </Col>
-      </Row> */}
-    </div>
-  );
-};
+      </Row>
+      </div>
+    );
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);
