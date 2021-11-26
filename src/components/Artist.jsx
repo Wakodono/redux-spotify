@@ -1,56 +1,19 @@
 import React from "react";
 import AlbumCard from "./AlbumCard";
 import { Row, Col } from "react-bootstrap";
+import { connect } from "react-redux";
+import getArtist from "../redux/action/index";
+
+const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  getArtist: (id) => dispatch(getArtist(id)),
+});
 
 class Artist extends React.Component {
-  state = {
-    artist: {},
-    songs: [],
-  };
+ 
 
   componentDidMount = async () => {
-    let artistId = this.props.match.params.id;
-
-    let headers = new Headers({
-      "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
-      "X-RapidAPI-Key": "c74a0a086emshf55ffb8dbdcb59ap17a486jsnb83bb4d3e387",
-    });
-
-    try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/deezer/artist/" + artistId,
-        {
-          method: "GET",
-          headers,
-        }
-      );
-
-      if (response.ok) {
-        let artist = await response.json();
-        this.setState(
-          {
-            artist,
-          },
-          async () => {
-            let tracksResponse = await fetch(
-              "https://striveschool-api.herokuapp.com/api/deezer/search?q=" +
-                artist.name,
-              {
-                method: "GET",
-                headers,
-              }
-            );
-
-            if (tracksResponse.ok) {
-              let tracklist = await tracksResponse.json();
-              this.setState({ songs: tracklist.data });
-            }
-          }
-        );
-      }
-    } catch (exception) {
-      console.log(exception);
-    }
+   this.props.getArtist(this.props.match.params.id);
   };
 
   render() {
@@ -108,4 +71,4 @@ class Artist extends React.Component {
   }
 }
 
-export default Artist;
+export default connect(mapStateToProps, mapDispatchToProps)(Artist);
