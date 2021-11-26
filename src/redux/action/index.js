@@ -1,12 +1,13 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 
-export default function getArtist (artistId) {
+const GetArtist = (artistId) => {
   const [artist, setArtist] = useState([]);
   const [song, setSong] = useState([]);
 
   return async (dispatch, getState) => {
-    let artistId = props.match.params.id;
+    let params = useParams();
+    let location = useLocation();
 
     let headers = new Headers({
       "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
@@ -41,7 +42,8 @@ export default function getArtist (artistId) {
 
             if (tracksResponse.ok) {
               let tracklist = await tracksResponse.json();
-              setSong({ songs: tracklist.data });
+              setSong({ tracklist });
+              console.log("SONGS ::::::::::::::", song);
             }
           }
         );
@@ -52,22 +54,4 @@ export default function getArtist (artistId) {
   };
 };
 
-// const getAllAlbums = (albums) => {
-//   return {
-//     type: "GET_ALL_ALBUMS",
-//     playload: albums,
-//   };
-// };
-
-// const fetchAlbums = () => {
-//     return (dispatch) => {
-//         dispatch(getAllAlbums)
-
-// fetcher("https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem",).then(res) {}
-// }
-// const getSingleAlbums = (album) => {
-//     return {
-//       type: "GET_S_ALBUMS",
-//       playload: album,
-//     };
-//   };
+export default GetArtist;

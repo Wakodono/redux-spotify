@@ -1,5 +1,5 @@
-import {createStore, applyMiddleware} from 'redux';
-import { initialState } from '../tools/initialState';
+import {createStore, applyMiddleware, compose} from 'redux';
+// import { initialState } from '../tools/initialState';
 import mainReducer from '../reducers/index';
 import thunk from 'redux-thunk';
 
